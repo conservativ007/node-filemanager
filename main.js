@@ -15,12 +15,16 @@ user.showHomeUserDirectory();
 readable.on("data", (chunk) => {
   let chunkFromInput = chunk.toString();
 
-  if (chunkFromInput.startsWith("cd")) {
-    userTripToFilesystem(chunkFromInput);
-  }
-
   if (chunkFromInput.startsWith("list")) {
     return user.showList();
+  }
+
+  if (chunkFromInput.startsWith("cd")) {
+    return user.move(chunkFromInput);
+  }
+
+  if (chunkFromInput.startsWith("up")) {
+    return user.up();
   }
 
 

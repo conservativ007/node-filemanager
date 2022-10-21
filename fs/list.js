@@ -5,10 +5,9 @@ export async function showUserFilesList(path) {
 
   try {
     let files = await fs.readdir(path);
-    console.log(files);
+    files.forEach(i => process.stdout.write(`${i} \n`));
   } catch (error) {
     throw new Error(error);
   }
-
-  process.stdout.write(`${path} \n`);
 }
+
