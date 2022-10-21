@@ -9,6 +9,7 @@ export function getPathWithCorrectSlashes(path, num = 3) {
 
 export function getAllPath(str1, str2) {
   let customPath = str1 + "/" + str2;
+  customPath = changeSlashes(customPath);
   return customPath;
 }
 

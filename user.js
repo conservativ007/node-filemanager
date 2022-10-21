@@ -26,15 +26,14 @@ export const user = {
     showUserFilesList(this.currentDirectory);
   },
 
-  // navigation operations
 
+  // navigation operations
   move(path) {
     path = getPathWithCorrectSlashes(path);
     let isThereSlash = path.includes("/");
 
     if (isThereSlash === false) {
       path = getAllPath(this.currentDirectory, path);
-      path = changeSlashes(path);
     }
 
     this.moveTo(path);
