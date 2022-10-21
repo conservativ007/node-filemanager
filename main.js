@@ -15,7 +15,9 @@ user.showHomeUserDirectory();
 readable.on("data", (chunk) => {
   let chunkFromInput = chunk.toString();
 
-  if (chunkFromInput.startsWith("list")) {
+  // mavigation and working directory
+
+  if (chunkFromInput.startsWith("ls")) {
     return user.showList();
   }
 
@@ -25,6 +27,11 @@ readable.on("data", (chunk) => {
 
   if (chunkFromInput.startsWith("up")) {
     return user.up();
+  }
+
+  // basic operations with files
+  if (chunkFromInput.startsWith("cut")) {
+    return user.cut(chunkFromInput);
   }
 
 

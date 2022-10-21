@@ -2,7 +2,8 @@ import { homedir } from "os";
 import { showUserFilesList } from "./fs/list.js";
 
 import fs from "fs";
-import { changeSlashes, getCorrectPath } from "./functions/functions.js";
+import { changeSlashes, getAllPath, getPathWithCorrectSlashes, getInformationFromFile } from "./functions/functions.js";
+import { cursorTo } from "readline";
 
 // console.log(stats);
 // console.log("Path is file:", stats.isFile());
@@ -25,23 +26,21 @@ export const user = {
     showUserFilesList(this.currentDirectory);
   },
 
-  move(path) {
-    console.log("move to path");
-    path = getCorrectPath(path);
+  // navigation operations
 
+  move(path) {
+    path = getPathWithCorrectSlashes(path);
     let isThereSlash = path.includes("/");
 
     if (isThereSlash === false) {
-      let customPath = this.currentDirectory + "/" + path;
-      customPath = changeSlashes(customPath)
-      console.log("customPath: ", customPath);
-
-      this.moveTo(customPath);
+      path = getAllPath(this.currentDirectory, path);
+      path = changeSlashes(path);
     }
+
+    this.moveTo(path);
   },
 
   up() {
-
     if (changeSlashes(this.homeUserDirectory) === changeSlashes(this.currentDirectory))
       return this.showCurrentUserDirectory();
 
@@ -64,5 +63,19 @@ export const user = {
         this.showCurrentUserDirectory();
       }
     });
+  },
+
+  // basic operations with files
+
+  cut(path) {
+    path = path.slice(4);
+    path = changeSlashes(path);
+
+    let isThereSlash = path.includes("/");
+
+    if (isThereSlash === false) {
+      path = getAllPath(this.currentDirectory, path);
+    }
+    getInformationFromFile(path);
   }
 }
