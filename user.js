@@ -2,8 +2,8 @@ import { homedir } from "os";
 import { showUserFilesList } from "./fs/list.js";
 
 import fs from "fs";
-import { changeSlashes, getAllPath, getPathWithCorrectSlashes, getInformationFromFile } from "./functions/functions.js";
-import { cursorTo } from "readline";
+import { changeSlashes, getAllPath, getPathWithCorrectSlashes, getInformationFromFile, createFile, getCorrectedString, renameFile, getAllPaths, copyFile, removeFile } from "./functions/functions.js";
+import { createInflate } from "zlib";
 
 // console.log(stats);
 // console.log("Path is file:", stats.isFile());
@@ -64,11 +64,11 @@ export const user = {
     });
   },
 
+
   // basic operations with files
 
   cut(path) {
-    path = path.slice(4);
-    path = changeSlashes(path);
+    path = getCorrectedString(path, 4);
 
     let isThereSlash = path.includes("/");
 
@@ -76,5 +76,35 @@ export const user = {
       path = getAllPath(this.currentDirectory, path);
     }
     getInformationFromFile(path);
+  },
+
+  add(path) {
+    path = getCorrectedString(path, 4);
+
+    let isThereSlash = path.includes("/");
+
+    if (isThereSlash === false) {
+      path = getAllPath(this.currentDirectory, path);
+    }
+    createFile(path);
+  },
+
+  rename(path) {
+    path = getCorrectedString(path, 3);
+    let correctPath = path.split(" ");
+    renameFile(this.currentDirectory, correctPath[0], correctPath[1]);
+  },
+
+  copy(path, deleteOldFile = false) {
+    path = getCorrectedString(path, 3);
+    let correctPath = path.split(" ");
+    correctPath = getAllPaths(correctPath, this.currentDirectory);
+
+    copyFile(correctPath, deleteOldFile);
+  },
+
+  remove(path) {
+    path = getCorrectedString(path, 3);
+    removeFile(path);
   }
 }

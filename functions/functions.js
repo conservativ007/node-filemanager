@@ -7,6 +7,13 @@ export function getPathWithCorrectSlashes(path, num = 3) {
   return path;
 }
 
+export function getCorrectedString(path, num = 0) {
+  path = path.slice(num, path.length);
+  path = path.replaceAll("\\", "/");
+  path = path.trim();
+  return path;
+}
+
 export function getAllPath(str1, str2) {
   let customPath = str1 + "/" + str2;
   customPath = changeSlashes(customPath);
@@ -30,6 +37,17 @@ export function moveTo(path, user) {
   });
 }
 
+export function getAllPaths(paths, directory) {
+  return paths.reduce((acc, item) => {
+    if (item.includes("/") === false) {
+      item = getAllPath(directory, item);
+    }
+    acc.push(item);
+    return acc;
+  }, []);
+}
+
+// basi operations
 export async function getInformationFromFile(path) {
 
   path = getPathWithCorrectSlashes(path, 0);
@@ -41,3 +59,43 @@ export async function getInformationFromFile(path) {
     console.error("CUSTOM ERROR");
   }
 }
+
+export async function createFile(path) {
+  try {
+    await fs.writeFile(path, "Hello!", { flag: "wx" });
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function renameFile(destination, oldFile, newFile) {
+  oldFile = getAllPath(destination, oldFile);
+  newFile = getAllPath(destination, newFile);
+
+  try {
+    await fs.rename(oldFile, newFile);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export async function copyFile(paths, deleteOldFile) {
+  try {
+    await fs.copyFile(paths[0], paths[1]);
+  } catch (error) {
+    throw new Error(error);
+  }
+
+  if (deleteOldFile === true) {
+    await fs.unlink(paths[0]);
+  }
+}
+
+export async function removeFile(path) {
+  try {
+    await fs.unlink(path);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+

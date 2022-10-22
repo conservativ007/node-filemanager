@@ -30,8 +30,35 @@ readable.on("data", (chunk) => {
   }
 
   // basic operations with files
+
+  // read file
   if (chunkFromInput.startsWith("cut")) {
     return user.cut(chunkFromInput);
+  }
+
+  // add file
+  if (chunkFromInput.startsWith("add")) {
+    return user.add(chunkFromInput);
+  }
+
+  // rename file
+  if (chunkFromInput.startsWith("rn")) {
+    return user.rename(chunkFromInput);
+  }
+
+  // copy file
+  if (chunkFromInput.startsWith("cp")) {
+    return user.copy(chunkFromInput);
+  }
+
+  // Move file (same as copy but initial file is deleted):
+  if (chunkFromInput.startsWith("mv")) {
+    return user.copy(chunkFromInput, true);
+  }
+
+  // remove file 
+  if (chunkFromInput.startsWith("rm")) {
+    return user.remove(chunkFromInput);
   }
 
 
