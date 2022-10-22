@@ -1,6 +1,6 @@
-export function welcome() {
+let userName = "";
 
-  let userName = "";
+export function welcome() {
 
   const argsFromUserInput = process.argv.slice(2);
   let preparedString = argsFromUserInput.join("");
@@ -8,9 +8,10 @@ export function welcome() {
     userName = preparedString.split("=")[1];
     process.stdout.write(`Welcome to the File Manager, ${userName}!\n`);
   }
+  process.on("SIGINT", bye);
+}
 
-  process.on("SIGINT", () => {
-    process.stdout.write(`Thank you for using File Manager, ${userName}!`);
-    process.exit();
-  });
+export function bye() {
+  process.stdout.write(`Thank you for using File Manager, ${userName}!`);
+  process.exit();
 }

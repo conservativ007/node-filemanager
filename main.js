@@ -1,7 +1,7 @@
 import { getHash } from "./functions/functions.js";
 import { getInformationAboutSystem } from "./os/getInfoAboutSystem.js";
 import { user } from "./user.js";
-import { welcome } from "./welcome.js";
+import { bye, welcome } from "./welcome.js";
 
 const readable = process.stdin;
 const writable = process.stdout;
@@ -69,6 +69,11 @@ readable.on("data", (chunk) => {
   // get hash from file
   if (chunkFromInput.startsWith("hash")) {
     return getHash(chunkFromInput);
+  }
+
+  // bye bye my friend :)
+  if (chunkFromInput.startsWith(".exit")) {
+    return bye();
   }
 
   writable.write("Invalid input \n");
