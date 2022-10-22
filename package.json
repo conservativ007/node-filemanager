@@ -1,0 +1,12 @@
+{
+  "name": "file_manager",
+  "version": "1.0.0",
+  "description": "this is file manager built on NodeJS",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "conservativ",
+  "license": "ISC"
+}
