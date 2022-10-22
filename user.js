@@ -1,18 +1,13 @@
 import { homedir } from "os";
-import { showUserFilesList } from "./fs/list.js";
-
 import fs from "fs";
-import { changeSlashes, getAllPath, getPathWithCorrectSlashes, getInformationFromFile, createFile, getCorrectedString, renameFile, getAllPaths, copyFile, removeFile } from "./functions/functions.js";
-import { createInflate } from "zlib";
 
-// console.log(stats);
-// console.log("Path is file:", stats.isFile());
-// console.log("Path is directory:", stats.isDirectory());
+import { showUserFilesList, changeSlashes, getAllPath, getPathWithCorrectSlashes, getInformationFromFile, createFile, getCorrectedString, renameFile, getAllPaths, copyFile, removeFile } from "./functions/functions.js";
+
 
 export const user = {
   homeUserDirectory: homedir(),
   currentDirectory: homedir(),
-  messageError: "Invalid input",
+  messageError: "Operation failed",
 
   showHomeUserDirectory() {
     process.stdout.write(`You are currently in ${homedir()} \n`);
@@ -35,7 +30,6 @@ export const user = {
     if (isThereSlash === false) {
       path = getAllPath(this.currentDirectory, path);
     }
-
     this.moveTo(path);
   },
 
@@ -106,5 +100,5 @@ export const user = {
   remove(path) {
     path = getCorrectedString(path, 3);
     removeFile(path);
-  }
+  },
 }

@@ -1,5 +1,5 @@
-// import { showHomeDirectory, showList } from "./os/showDirectory.js";
-import { userTripToFilesystem } from "./os/userTripToFilesystem.js";
+import { getHash } from "./functions/functions.js";
+import { getInformationAboutSystem } from "./os/getInfoAboutSystem.js";
 import { user } from "./user.js";
 import { welcome } from "./welcome.js";
 
@@ -61,6 +61,15 @@ readable.on("data", (chunk) => {
     return user.remove(chunkFromInput);
   }
 
+  // Operating system info (prints information in console)
+  if (chunkFromInput.startsWith("os")) {
+    return getInformationAboutSystem(chunkFromInput);
+  }
 
-  writable.write(chunkFromInput);
+  // get hash from file
+  if (chunkFromInput.startsWith("hash")) {
+    return getHash(chunkFromInput);
+  }
+
+  writable.write("Invalid input \n");
 });
